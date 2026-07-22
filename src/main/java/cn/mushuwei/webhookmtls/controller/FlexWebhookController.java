@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/webhooks/flex")
@@ -27,7 +28,7 @@ public class FlexWebhookController {
     private EventProcessorService processorService;
 
     @PostMapping("/events")
-    public ResponseEntity<String> receiveEvent(@RequestBody FlexEvent event,
+    public ResponseEntity<String> receiveEvent(@RequestBody Map<String, Object> params,
                                                HttpServletRequest request) {
         // 1. 强制校验 mTLS 客户端证书
         X509Certificate[] certs = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
@@ -39,7 +40,7 @@ public class FlexWebhookController {
 
 
         // 4. 异步处理
-        processorService.processAsync(event);
+        processorService.processAsync(params);
 
         // 5. 立即返回 202 Accepted
         return ResponseEntity.accepted().build();

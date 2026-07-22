@@ -5,19 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @Slf4j
 public class EventProcessorService {
 
     @Async("taskExecutor")
-    public void processAsync(FlexEvent event) {
+    public void processAsync(Map<String, Object> params) {
         try {
-            log.info("Processing event: {}, payload: {}", event.getEventId(), event.getPayload());
+            log.info("Processing payload: {}", params);
             // 模拟业务耗时（例如调用外部 API、更新数据库）
-            Thread.sleep(2000);
-            log.info("Event {} processed successfully.", event.getEventId());
+
         } catch (Exception e) {
-            log.error("Failed to process event {}: {}", event.getEventId(), e.getMessage(), e);
+            log.error("Failed to process event {}", e.getMessage());
         }
     }
 }
