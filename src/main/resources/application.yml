@@ -1,0 +1,23 @@
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    # 您的服务端身份证书（PKCS12 格式）
+    key-store: classpath:certs/server-keystore.p12
+    key-store-password: 16o21u1ea5q
+    key-store-type: PKCS12
+
+    trust-store: classpath:certs/flex-truststore.p12
+    trust-store-password: changeit
+    trust-store-type: PKCS12
+    # 'want' 允许不提供证书的请求，应用层再对 /webhooks/flex/events 强制校验
+    client-auth: want
+
+  tomcat:
+    connection-timeout: 5000
+
+logging:
+  level:
+    root: INFO
+    com.example.flex: DEBUG
+    org.springframework.web: DEBUG
