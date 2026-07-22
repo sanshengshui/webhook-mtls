@@ -3,7 +3,7 @@ server:
   ssl:
     enabled: true
     # 您的服务端身份证书（PKCS12 格式）
-    key-store: classpath:certs/server-keystore.p12
+    key-store: classpath:certs/server-test.p12
     key-store-password: 72tin2x0fyb5
     key-store-type: PKCS12
 
